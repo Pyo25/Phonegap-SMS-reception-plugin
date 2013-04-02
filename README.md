@@ -11,20 +11,17 @@ This plugin was successfully tested with Phonegap 2.5 and Android 4.2.2 (on a Sa
 1. Move SmsInboxPlugin.js to your project's www folder and include a reference to it in your html files. 
 2. Add the java files from src to your project's src hierarchy
 3. Reference the plugin in your res/config.xml file
-
-<plugin name="SendInboxPlugin" value="org.apache.cordova.plugin.SendInboxPlugin"/>
-
+```<plugin name="SendInboxPlugin" value="org.apache.cordova.plugin.SendInboxPlugin"/>```
 4. Ensure that your manifest contains the necessary permissions to send SMS messages:
-
-<uses-permission android:name="android.permission.RECEIVE_SMS" />
-
+```<uses-permission android:name="android.permission.RECEIVE_SMS" />```
 5. Add the receiver in your manifest
-
+```
 <receiver android:name="org.apache.cordova.plugin.SmsReceiver" android:exported="true" > 
   <intent-filter android:priority="1000"> 
     <action android:name="android.provider.Telephony.SMS_RECEIVED" />
   </intent-filter> 
 </receiver>
+```
 
 ## Using the plugin ##
 To instantiate the plugin object:
