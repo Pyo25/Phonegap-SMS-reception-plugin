@@ -15,12 +15,13 @@ This plugin was successfully tested with Phonegap 2.5 and Android 4.2.2 (on a Sa
 4. Ensure that your manifest contains the necessary permissions to send SMS messages:
 ```<uses-permission android:name="android.permission.RECEIVE_SMS" />```
 5. Add the receiver in your manifest
+
 ```
-<receiver android:name="org.apache.cordova.plugin.SmsReceiver" android:exported="true" > 
-  <intent-filter android:priority="1000"> 
-    <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-  </intent-filter> 
-</receiver>
+  <receiver android:name="org.apache.cordova.plugin.SmsReceiver" android:exported="true" > 
+    <intent-filter android:priority="1000"> 
+      <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+    </intent-filter> 
+  </receiver>
 ```
 
 ## Using the plugin ##
