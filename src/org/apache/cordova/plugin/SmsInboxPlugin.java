@@ -38,6 +38,7 @@ public class SmsInboxPlugin extends CordovaPlugin {
 	
 	private CallbackContext callback_receive;
 	private SmsReceiver smsReceiver = null;
+	private boolean isReceiving = false;
 	
 	public SmsInboxPlugin() {
 		super();
@@ -59,11 +60,24 @@ public class SmsInboxPlugin extends CordovaPlugin {
 		}
 		else if (action.equals(ACTION_RECEIVE_SMS)) {
 			
+			// if already receiving (this case can happen if the startReception is called
+			// several times
+			if(this.isReceiving) {
+				// close the already opened callback ...
+				PluginResult pluginResult = new PluginResult(
+						PluginResult.Status.NO_RESULT);
+				pluginResult.setKeepCallback(false);
+				this.callback_receive.sendPluginResult(pluginResult);
+				
+				// ... before registering a new one to the sms receiver
+			}
+			this.isReceiving = true;
+				
 			if(this.smsReceiver == null) {
 				this.smsReceiver = new SmsReceiver();
-				IntentFilter fp = new IntentFilter();
-			    fp.addAction("android.provider.Telephony.SMS_RECEIVED");
+				IntentFilter fp = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
 			    fp.setPriority(1000);
+			    // fp.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
 			    this.cordova.getActivity().registerReceiver(this.smsReceiver, fp);
 			}
 			
@@ -79,7 +93,11 @@ public class SmsInboxPlugin extends CordovaPlugin {
 		}
 		else if(action.equals(ACTION_STOP_RECEIVE_SMS)) {
 			
-			smsReceiver.stopReceiving();
+			if(this.smsReceiver != null) {
+				smsReceiver.stopReceiving();
+			}
+
+			this.isReceiving = false;
 			
 			// 1. Stop the receiving context
 			PluginResult pluginResult = new PluginResult(
