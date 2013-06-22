@@ -65,7 +65,9 @@ Example:
 ```
 
 ### Aborting a broadcast ###
-If you abort the broadcast using this plugin (by setting the broadcast variable to true in the SmsReceiver), the SMS will not be broadcast to other applications like the native SMS app. So ... be careful !
+If you abort the broadcast using this plugin (see ``broadcast`` boolean variable 
+in the ``org.apache.cordova.plugin.SmsReceiver``), the SMS will not be broadcast to other
+applications like the native SMS app. So ... be careful !
 
 A good way to manage this is to stop the sms reception when the onPause event is fired and, when the onResume event is fired, restart the reception.
   
