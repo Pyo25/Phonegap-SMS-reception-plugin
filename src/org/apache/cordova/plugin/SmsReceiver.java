@@ -56,7 +56,9 @@ public class SmsReceiver extends BroadcastReceiver {
 			{
 				SmsMessage sms = SmsMessage.createFromPdu((byte[]) smsExtra[i]);
 				if(this.isReceiving && this.callback_receive != null) {
-					String formattedMsg = sms.getOriginatingAddress() + ">" + sms.getMessageBody();
+                    String phoneNumber = "\"phoneNumber\" : \"" + sms.getOriginatingAddress() + "\"";
+                    String messageBody = "\"message\" : \"" + sms.getMessageBody() + "\"";
+                    String formattedMsg = "{" + phoneNumber + ", " + messageBody + "}";
 		        	PluginResult result = new PluginResult(PluginResult.Status.OK, formattedMsg);
 		           	result.setKeepCallback(true);
 		            callback_receive.sendPluginResult(result);
