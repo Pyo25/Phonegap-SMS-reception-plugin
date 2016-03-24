@@ -22,8 +22,8 @@ THE SOFTWARE.
 
 package org.apache.cordova.plugin;
 
-import org.apache.cordova.api.CallbackContext;
-import org.apache.cordova.api.PluginResult;
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.PluginResult;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -56,7 +56,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			{
 				SmsMessage sms = SmsMessage.createFromPdu((byte[]) smsExtra[i]);
 				if(this.isReceiving && this.callback_receive != null) {
-					String formattedMsg = sms.getOriginatingAddress() + ">" + sms.getMessageBody();
+                    String formattedMsg = sms.getMessageBody();
 		        	PluginResult result = new PluginResult(PluginResult.Status.OK, formattedMsg);
 		           	result.setKeepCallback(true);
 		            callback_receive.sendPluginResult(result);
